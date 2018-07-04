@@ -14,7 +14,7 @@ npm run dev
 
 ## server
 ```js
-// 进入socket目录
-cd socket
+// 进入server目录
+cd server
 node app
 ```
