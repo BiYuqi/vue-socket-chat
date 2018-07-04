@@ -8,10 +8,13 @@ git clone https://github.com/BiYuqi/vue-socket-chat.git
 cd vue-socket-chat
 
 npm install
+
+npm run dev
 ```
 
 ## server
 ```js
+// 进入socket目录
 cd socket
 node app
 ```
