@@ -6,6 +6,21 @@ const server = require('http').createServer(app)
 const io = socket(server)
 const users = []
 
+/*
+ * CORS support.
+ */
+app.all('*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild')
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS')
+
+  if (req.method === 'OPTIONS') {
+    res.send(200)
+  } else {
+    next()
+  }
+})
+
 io.on('connection', (socket) => {
   console.log('有人连接')
   /* 是否是新用户标识 */
