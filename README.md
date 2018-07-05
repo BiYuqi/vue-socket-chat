@@ -15,6 +15,7 @@ npm run dev
 ## server
 ```js
 // 进入server目录
+// 已经加了防跨域机制，同网段，用ip可以访问，聊天
 cd server
 node app
 ```
@@ -24,6 +25,6 @@ node app
 ```js
 Vue.prototype.socket = io('ws://localhost:9786')
 
-// to
+// to your ip
 Vue.prototype.socket = io('ws://192.168.31.223:9786')
 ```

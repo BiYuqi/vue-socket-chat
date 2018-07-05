@@ -4,11 +4,13 @@
       <h2>多人聊天系统登录</h2>
       <input type="text" v-model="name" placeholder="请输入昵称">
       <button @click="sendMessage">登录</button>
+      <img-list></img-list>
     </div>
   </div>
 </template>
 
 <script>
+import ImgList from './PhotoImg/index.vue'
 export default {
   name: 'login',
   data () {
@@ -26,10 +28,13 @@ export default {
           this.$router.push({
             name: 'chat'
           })
-          const num = Math.floor(Math.random() * 3 + 1)
+          // 如果未选择头像 则随机头像
+          const num = Math.floor(Math.random() * 25 + 1)
           const img = require(`../assets/img/${num}.jpg`)
+          if (!localStorage.imgPath) {
+            localStorage.imgPath = img
+          }
           localStorage.username = this.name
-          localStorage.imgPath = img
         })
         /* 登录失败 */
         this.socket.on('loginFail', () => {
@@ -37,6 +42,9 @@ export default {
         })
       }
     }
+  },
+  components: {
+    ImgList
   }
 }
 </script>
@@ -53,7 +61,7 @@ export default {
 .input-box{
   text-align: center;
   position: absolute;
-  top: 20%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -74,20 +82,24 @@ input{
 }
 button {
   width: 4rem;
-  height: .5rem;
-  line-height: .5rem;
+  height: .6rem;
+  line-height: .6rem;
   text-align: center;
   background-color: green;
   color: #fff;
   outline: none;
   border: none;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 @media screen and (min-width: 500px) {
   input, button{
     width: 300px;
     height: 40px;
     line-height: 40px;
+  }
+  input{
+    margin-bottom: 15px;
   }
   .login{
     border: 1px solid #d2d2d2;

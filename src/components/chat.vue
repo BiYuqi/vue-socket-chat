@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="chat">
-    <div class="header">多人聊天系统</div>
+    <div class="header">多人聊天室</div>
     <div class="content" ref="ct">
       <div class="box" v-for="(user, index) in serverList" :key="index">
         <div class="add" v-if="user.type === 'add'">
