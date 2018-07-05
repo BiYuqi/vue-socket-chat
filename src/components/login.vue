@@ -1,7 +1,8 @@
 <template>
   <div class="login">
     <div class="input-box">
-      <input type="text" v-model="name" placeholder="请输入昵称"><br />
+      <h2>多人聊天系统登录</h2>
+      <input type="text" v-model="name" placeholder="请输入昵称">
       <button @click="sendMessage">登录</button>
     </div>
   </div>
@@ -42,28 +43,54 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.login{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
 .input-box{
   text-align: center;
-  margin-top: 100px;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+h2{
+  margin-bottom: .3rem;
 }
 input{
   display: block;
-  width: 200px;
+  width: 4rem;
   margin: 0 auto;
-  border: 1px solid #999;
-  height: 40px;
-  line-height: 40px;
+  height: .6rem;
+  line-height: .6rem;
   outline: none;
   padding-left: 4px;
+  margin-bottom: .3rem;
+  font-size: 14px;
+  border: 1px solid #999;
 }
 button {
-  width: 200px;
-  height: 40px;
-  line-height: 40px;
+  width: 4rem;
+  height: .5rem;
+  line-height: .5rem;
   text-align: center;
   background-color: green;
   color: #fff;
   outline: none;
   border: none;
-};
+  cursor: pointer;
+}
+@media screen and (min-width: 500px) {
+  input, button{
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .login{
+    border: 1px solid #d2d2d2;
+  }
+}
 </style>

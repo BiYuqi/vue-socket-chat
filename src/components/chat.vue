@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="footer">
-      <input type="text" v-model="message">
+      <input type="text" v-model="message" placeholder="请输入聊天内容...">
       <button @click="sendMessage">发送</button>
     </div>
   </div>
@@ -38,6 +38,7 @@ export default {
   },
   methods: {
     sendMessage () {
+      if (!this.message) return
       this.socket.emit('sendMessage', {
         username: this.name,
         message: this.message,
@@ -88,15 +89,16 @@ export default {
 }
 .header{
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 1rem;
+  line-height: 1rem;
   text-align: center;
   background-color: rgb(97, 96, 96);
   color: #fff;
+  font-size: 16px;
 }
 .content{
   position: absolute;
-  top: 40px;
+  top: 1rem;
   left: 0;
   width: 100%;
   bottom: 50px;
@@ -112,37 +114,41 @@ export default {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 50px;
+  height: 1rem;
   width: 100%;
+  display: flex;
 }
 input{
   display: inline-block;
   margin: 0 auto;
-  border: 1px solid #999;
-  height: 50px;
+  border: none;
+  height: 1rem;
   outline: none;
   width: 80%;
   padding-left: 4px;
+  flex-shrink: 0;
 }
 button {
-  height: 50px;
+  height: 1rem;
   width: 19%;
   text-align: center;
   background-color: green;
   color: #fff;
   outline: none;
   border: none;
+  flex-shrink: 0;
+  cursor: pointer;
 }
 .add{
   font-size: 12px;
   text-align: center;
-  margin: 4px 0;
+  margin: 6px 0;
 }
 .me{
   position: relative;
   text-align: right;
   padding-right: 40px;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 .img-box{
   width: 35px;
@@ -152,7 +158,7 @@ button {
   border-radius: 50%;
   display: block;
   position: absolute;
-  top: 0;
+  top: -4px;
   right: 0;
   padding-right: 3px;
 }
@@ -162,30 +168,45 @@ button {
 }
 .mess-text{
   display: inline-block;
-}
-.me .mess-text{
-  background-color: rgb(76, 183, 86);
+  max-width: 70%;
+  padding: 6px;
   color: #fff;
   border-radius: 4px;
   font-size: 13px;
-  padding: 4px;
+  text-align: left;
+}
+.me .mess-text{
+  background-color: rgb(76, 183, 86);
 }
 .other {
   position: relative;
-  text-align: left;
   padding-left: 40px;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 .other .img-box{
   position: absolute;
   left: 0;
-  top: 0;
+  top: -4px;
 }
 .other .mess-text{
   background-color: #fff;
   color: #666;
   border-radius: 4px;
-  font-size: 13px;
-  padding: 4px;
+}
+@media screen and (min-width: 500px) {
+  .header{
+    height: 50px;
+    line-height: 50px;
+  }
+  .content{
+    top: 50px;
+  }
+  .footer{
+    height: 50px;
+  }
+  .footer input, .footer button{
+    height: 50px;
+    font-size: 16px;
+  }
 }
 </style>

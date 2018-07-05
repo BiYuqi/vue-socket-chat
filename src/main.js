@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import io from 'socket.io-client'
+import '../static/js/rem.js'
 
 Vue.config.productionTip = false
 Vue.prototype.socket = io('ws://localhost:9786')

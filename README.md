@@ -18,3 +18,12 @@ npm run dev
 cd server
 node app
 ```
+
+## 注意
+如果需要同网段，不同电脑聊天需要更改 main.js 文件
+```js
+Vue.prototype.socket = io('ws://localhost:9786')
+
+// to
+Vue.prototype.socket = io('ws://192.168.31.223:9786')
+```
