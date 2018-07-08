@@ -28,4 +28,8 @@ body{
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
+button{
+  outline: none;
+  border: none;
+}
 </style>

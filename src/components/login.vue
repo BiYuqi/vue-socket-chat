@@ -3,7 +3,7 @@
     <div class="input-box">
       <h2>多人聊天系统登录</h2>
       <input type="text" v-model="name" placeholder="请输入昵称">
-      <button @click="sendMessage">登录</button>
+      <button @click="loginBtn">登录</button>
       <img-list></img-list>
     </div>
   </div>
@@ -19,14 +19,15 @@ export default {
     }
   },
   methods: {
-    sendMessage () {
+    loginBtn () {
       if (this.name) {
+        localStorage.username = this.name
         this.socket.removeAllListeners()
         this.socket.emit('login', {username: this.name})
         /* 登录成功 */
         this.socket.on('loginSuccess', (data) => {
           this.$router.push({
-            name: 'chat'
+            name: 'list'
           })
           // 如果未选择头像 则随机头像
           const num = Math.floor(Math.random() * 25 + 1)
@@ -34,11 +35,10 @@ export default {
           if (!localStorage.imgPath) {
             localStorage.imgPath = img
           }
-          localStorage.username = this.name
         })
         /* 登录失败 */
         this.socket.on('loginFail', () => {
-          alert('昵称重复')
+          alert('用户名已被占用,请重新选择昵称')
         })
       }
     }

@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import io from 'socket.io-client'
 import '../static/js/rem.js'
 
@@ -12,6 +13,7 @@ Vue.prototype.socket = io('ws://localhost:9786')
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

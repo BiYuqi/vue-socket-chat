@@ -1,7 +1,7 @@
 const express = require('express')
 const socket = require('socket.io')
 const app = express()
-
+const msgFun = require('./sendMsg')
 const server = require('http').createServer(app)
 const io = socket(server)
 const users = []
@@ -25,9 +25,14 @@ io.on('connection', (socket) => {
   console.log('有人连接')
   /* 是否是新用户标识 */
   let isNewPerson = true
-  /* 当前登录用户 */
+  /* 当前群聊登录用户 */
   let username
-  /* 监听登录 */
+  /* 保存个人用户信息 */
+  let userSocket = {}
+  let userInfo = {}
+  /**
+  * 初始化登录
+  */
   socket.on('login', (data) => {
     for (var i = 0; i < users.length; i++) {
       if (users[i].username === data.username) {
@@ -44,26 +49,47 @@ io.on('connection', (socket) => {
       })
       /* 登录成功 */
       socket.emit('loginSuccess', data)
-      /* 向所有连接的客户端广播add事件 */
-      io.sockets.emit('add', data)
+      /* **保留每个用户socket，实现私聊 */
+      userSocket[data.username] = socket
+      userInfo[data.username] = data.username
+      /**************************************/
     } else {
       /* 登录失败 */
       socket.emit('loginFail', '')
     }
   })
-
-  socket.on('disconnect', function () {
+  /**
+  * 群聊
+  */
+  socket.on('joinGroup', function (data) {
+    /* 登录成功 */
+    socket.emit('joinSuccess', data)
+    /* 向所有连接的客户端广播add事件 */
+    io.sockets.emit('add', data)
+  })
+  /**
+  * 断开连接
+  */
+  socket.on('disConnect', function (data) {
     /* 向所有连接的客户端广播leave事件 */
-    io.sockets.emit('leave', username)
+    console.log(data.username + 'leave room')
+    io.sockets.emit('leave', data)
     users.map(function (val, index) {
-      if (val.username === username) {
+      if (val.username === data.username) {
         users.splice(index, 1)
       }
     })
   })
-
+  /**
+  * 发送消息
+  */
   socket.on('sendMessage', function (data) {
-    io.sockets.emit('receiveMessage', data)
+    if (!data.to) { // 群发
+      msgFun.sendAllMsg(data, io)
+    } else { // 点对点
+      data.type = 2
+      msgFun.sendUserMsg(data, userSocket)
+    }
   })
 })
 
