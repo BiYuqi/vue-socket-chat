@@ -20,7 +20,7 @@
         </div>
         <div class="other" v-if="user.type === 'other'">
           <span class="mess-text">{{ user.msg }}</span>
-          <span class="img-box">
+          <span class="img-box" @click="privateChat(user)">
             <img :src="user.img" alt="">
           </span>
         </div>
@@ -39,7 +39,7 @@ export default {
     return {
       message: '',
       serverList: [],
-      name: localStorage.username
+      name: sessionStorage.username
     }
   },
   methods: {
@@ -48,14 +48,29 @@ export default {
       this.socket.emit('sendMessage', {
         username: this.name,
         message: this.message,
-        img: localStorage.imgPath
+        img: sessionStorage.imgPath
       })
     },
     leaveChat () {
       console.log(this.name + 'leave room')
       this.socket.emit('disConnect', {
         username: this.name,
-        img: localStorage.imgPath
+        img: sessionStorage.imgPath
+      })
+    },
+    privateChat (user) {
+      const obj = {
+        to: user.username,
+        user: sessionStorage.username,
+        toImg: user.img,
+        userImg: sessionStorage.imgPath
+      }
+      this.$store.commit('setChatList', obj)
+      this.$router.push({
+        name: 'private',
+        query: {
+          id: obj.to
+        }
       })
     }
   },
@@ -66,7 +81,7 @@ export default {
     */
     this.socket.on('add', (data) => {
       // 过滤用户为自己时消息提示
-      if (localStorage.username !== data.username) {
+      if (sessionStorage.username !== data.username) {
         this.serverList.push({
           type: 'add',
           username: data.username,
@@ -79,7 +94,7 @@ export default {
     * 用户离开群聊
     */
     this.socket.on('leave', (data) => {
-      if (localStorage.username !== data.username) {
+      if (sessionStorage.username !== data.username) {
         this.serverList.push({
           type: 'leave',
           username: data.username,

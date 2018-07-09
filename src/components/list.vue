@@ -14,8 +14,16 @@
           <div class="r-b">......</div>
         </div>
       </div>
+      <div class="list-item" v-for="(item, index) in currentPrivateList" :key="index" @click="joinPrivate(item)">
+        <div class="left">
+          <img :src="item.toImg" alt="">
+        </div>
+        <div class="right">
+          <div class="r-t">{{item.to}}</div>
+          <div class="r-b"></div>
+        </div>
+      </div>
     </div>
-    <h4 style="text-align:center;margin-top: 50px;">私聊正在开发中...</h4>
   </div>
 </template>
 
@@ -25,12 +33,12 @@ export default {
     return {
       message: '',
       serverList: [],
-      name: localStorage.username
+      name: sessionStorage.username
     }
   },
   methods: {
     leaveChat () {
-      localStorage.removeItem('username')
+      sessionStorage.removeItem('username')
       this.$router.push({
         name: 'login'
       })
@@ -40,7 +48,7 @@ export default {
         type: 'add',
         username: this.name,
         msg: '',
-        img: localStorage.imgPath
+        img: sessionStorage.imgPath
       }
       this.socket.emit('joinGroup', data)
       this.socket.on('joinSuccess', (data) => {
@@ -48,6 +56,19 @@ export default {
           name: 'chat'
         })
       })
+    },
+    joinPrivate (item) {
+      this.$router.push({
+        name: 'private',
+        query: {
+          id: item.to
+        }
+      })
+    }
+  },
+  computed: {
+    currentPrivateList () {
+      return this.$store.state.chatlist
     }
   }
 }
@@ -80,13 +101,12 @@ export default {
   }
 }
 .conntet-list{
-  // height: 100%;
-  border-bottom: 1px solid rgb(232, 232, 232);
   .list-item{
     display: flex;
     justify-content: flex-start;
     height: 1.1rem;
     padding: 2px;
+    border-bottom: 1px solid rgb(232, 232, 232);
   }
   .left{
     width: 1rem;

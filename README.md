@@ -27,11 +27,13 @@ node app
 #### 前端
 - [x] 群聊功能已实现
 - [x] 聊天列表开发完毕
-- [ ] 私聊未正在开发中...
+- [x] 私聊开发完毕
 - [ ] 优化组件，提取公用模块
 
 ## 注意
 如果需要同网段，不同电脑聊天需要更改 main.js 文件
+目前只能从群聊入口进行私聊
+没有缓存，没有聊天记录，阅后即焚哦😯
 ```js
 Vue.prototype.socket = io('ws://localhost:9786')
 
@@ -40,8 +42,12 @@ Vue.prototype.socket = io('ws://xxx.xxx.xxx.xxx:9786')
 ```
 
 ## 预览
-#### 登录 ![](http://oq4hkch8e.bkt.clouddn.com/chat1.png)
+#### 登录
+![](http://oq4hkch8e.bkt.clouddn.com/chat1.png)
 #### 聊天列表
-![](http://oq4hkch8e.bkt.clouddn.com/chat2.png)
+![](http://oq4hkch8e.bkt.clouddn.com/list.png)
 #### 群聊
-![](http://oq4hkch8e.bkt.clouddn.com/chat3.png)
+![](http://oq4hkch8e.bkt.clouddn.com/qunliao.png)
+#### 私聊
+![](http://oq4hkch8e.bkt.clouddn.com/private.png)
+![](http://oq4hkch8e.bkt.clouddn.com/private2.png)

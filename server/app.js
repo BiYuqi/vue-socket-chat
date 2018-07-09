@@ -1,11 +1,13 @@
 const express = require('express')
 const socket = require('socket.io')
 const app = express()
-const msgFun = require('./sendMsg')
 const server = require('http').createServer(app)
 const io = socket(server)
 const users = []
 
+/* 保存个人用户信息 */
+let userSocket = {}
+let userInfo = {}
 /*
  * CORS support.
  */
@@ -27,9 +29,6 @@ io.on('connection', (socket) => {
   let isNewPerson = true
   /* 当前群聊登录用户 */
   let username
-  /* 保存个人用户信息 */
-  let userSocket = {}
-  let userInfo = {}
   /**
   * 初始化登录
   */
@@ -85,14 +84,26 @@ io.on('connection', (socket) => {
   */
   socket.on('sendMessage', function (data) {
     if (!data.to) { // 群发
-      msgFun.sendAllMsg(data, io)
+      sendAllMsg(data, io)
     } else { // 点对点
-      data.type = 2
-      msgFun.sendUserMsg(data, userSocket)
+      data.msgType = 'private'
+      sendUserMsg(data, userSocket)
     }
   })
 })
-
+/* ************************ */
+function sendUserMsg (data, socket) { // 点对点聊天
+  if (data.to in socket) {
+    console.log('================')
+    socket[data.to].emit('to' + data.to, data)
+    socket[data.user].emit('to' + data.user, data)
+    console.log('to' + data.to)
+    console.log('to' + data.user)
+  }
+}
+function sendAllMsg (data, io) { // 群发消息
+  io.sockets.emit('receiveMessage', data)
+}
 server.listen(9786, () => {
   console.log('server is runing at 9786')
 })

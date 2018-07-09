@@ -21,20 +21,20 @@ export default {
   methods: {
     loginBtn () {
       if (this.name) {
-        localStorage.username = this.name
+        sessionStorage.username = this.name
         this.socket.removeAllListeners()
         this.socket.emit('login', {username: this.name})
         /* 登录成功 */
         this.socket.on('loginSuccess', (data) => {
-          this.$router.push({
-            name: 'list'
-          })
           // 如果未选择头像 则随机头像
           const num = Math.floor(Math.random() * 25 + 1)
           const img = require(`../assets/img/${num}.jpg`)
-          if (!localStorage.imgPath) {
-            localStorage.imgPath = img
+          if (!sessionStorage.imgPath) {
+            sessionStorage.imgPath = img
           }
+          this.$router.push({
+            name: 'list'
+          })
         })
         /* 登录失败 */
         this.socket.on('loginFail', () => {

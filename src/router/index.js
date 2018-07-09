@@ -18,17 +18,22 @@ const router = new Router({
       path: '/list',
       name: 'list',
       component: () => import('@/components/list.vue')
+    },
+    {
+      path: '/private',
+      name: 'private',
+      component: () => import('@/components/private.vue')
     }
   ]
 })
 /* eslint handle-callback-err: "error" */
 router.beforeEach((to, from, next) => {
-  if (!localStorage.username && to.name !== 'login') {
+  if (!sessionStorage.username && to.name !== 'login') {
     next({
       replace: true,
       name: 'login'
     })
-  } else if (localStorage.username && to.name === 'login') {
+  } else if (sessionStorage.username && to.name === 'login') {
     next({
       name: 'list'
     })

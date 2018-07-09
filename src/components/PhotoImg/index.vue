@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     checkImg (img, index) {
-      localStorage.imgPath = img
+      sessionStorage.imgPath = img
       this.curentIndex = index
     }
   },
