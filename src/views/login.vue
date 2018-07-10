@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ImgList from './PhotoImg/index.vue'
+import ImgList from '@/components/AvatorImg/index.vue'
 export default {
   name: 'login',
   data () {
@@ -51,58 +51,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.login{
-  position: relative;
-  height: 100%;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.input-box{
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-h2{
-  margin-bottom: .3rem;
-}
-input{
-  display: block;
-  width: 4rem;
-  margin: 0 auto;
-  height: .6rem;
-  line-height: .6rem;
-  outline: none;
-  padding-left: 4px;
-  margin-bottom: .3rem;
-  font-size: 14px;
-  border: 1px solid #999;
-}
-button {
-  width: 4rem;
-  height: .6rem;
-  line-height: .6rem;
-  text-align: center;
-  background-color: green;
-  color: #fff;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-@media screen and (min-width: 500px) {
-  input, button{
-    width: 300px;
-    height: 40px;
-    line-height: 40px;
-  }
-  input{
-    margin-bottom: 15px;
-  }
-  .login{
-    border: 1px solid #d2d2d2;
-  }
-}
+@import'../styles/login.scss';
 </style>

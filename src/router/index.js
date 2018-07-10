@@ -7,22 +7,22 @@ const router = new Router({
     {
       path: '/',
       name: 'login',
-      component: () => import('@/components/login.vue')
+      component: () => import('@/views/login.vue')
     },
     {
       path: '/chat',
       name: 'chat',
-      component: () => import('@/components/chat.vue')
+      component: () => import('@/views/chat.vue')
     },
     {
       path: '/list',
       name: 'list',
-      component: () => import('@/components/list.vue')
+      component: () => import('@/views/list.vue')
     },
     {
       path: '/private',
       name: 'private',
-      component: () => import('@/components/private.vue')
+      component: () => import('@/views/private.vue')
     }
   ]
 })

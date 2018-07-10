@@ -138,5 +138,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import'./styles/chat.scss';
+@import'../styles/chat.scss';
 </style>

@@ -6,10 +6,6 @@
     </div>
     <div class="content" ref="ct">
       <div class="chat-box" v-for="(user, index) in serverList" :key="index">
-        <div class="add" v-if="user.type === 'add'">
-          <span style="color: blue;">{{user.username}}</span>
-          {{user.type === 'add' ? '加入': '离开'}}群聊
-        </div>
         <div class="me" v-if="user.type === 'me'">
           <span class="mess-text">{{ user.msg }}</span>
           <span class="img-box">
@@ -64,7 +60,7 @@ export default {
     */
     const to = 'to' + sessionStorage.username
     this.socket.on(to, (data) => {
-      console.log('消息也来了')
+      console.log('消息也来了', data)
       // showMessage(data)
       if (data.msgType && data.msgType === 'private') {
         if (data.user === sessionStorage.username) {
@@ -83,6 +79,9 @@ export default {
           })
         }
       }
+      /**
+      * 自动上浮文字
+      */
       setTimeout(() => {
         const chatItemList = Array.from(document.querySelectorAll('.chat-box'))
         chatItemList[chatItemList.length - 1].scrollIntoView({block: 'end', behavior: 'smooth'})
@@ -94,5 +93,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import'./styles/private.scss';
+@import'../styles/private.scss';
 </style>
