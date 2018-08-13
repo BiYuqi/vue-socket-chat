@@ -13,12 +13,19 @@ npm run dev
 ```
 
 ## server
-本地开发必须启动node服务
+1.本地开发必须启动node服务
 ```js
 // 进入server目录
 // 已经加了防跨域机制，同网段，用ip可以访问，聊天
 cd server
 node app
+```
+2.建议全局安装supervisor,node代码可自动热更
+```js
+npm install supervisor -g
+
+cd serder
+supervisor app
 ```
 ## Plan
 #### server
